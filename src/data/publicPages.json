@@ -1,0 +1,8 @@
+[
+    {
+        "title":"Weather",
+        "description":"Weather forecast",
+        "icon":"arcticons:openweather-alt",
+        "href":"/weather"
+    }
+]

@@ -3,6 +3,24 @@
         "title":"Weather",
         "description":"Weather forecast",
         "icon":"arcticons:openweather-alt",
+        "category":"Global",
+        "mine":true,
         "href":"/weather"
+    },
+    {
+        "title":"Free Convertor",
+        "description":"The free convertor and compressor for all files",
+        "icon":"solar:refresh-circle-bold",
+        "category":"Global",
+        "mine":false,
+        "href":"https://www.freeconvert.com"
+    },
+    {
+        "title":"Free Media",
+        "description":"Include videos, image, vectors",
+        "icon":"mdi:multimedia",
+        "category":"Global",
+        "mine":false,
+        "href":"https://www.vecteezy.com/"
     }
 ]

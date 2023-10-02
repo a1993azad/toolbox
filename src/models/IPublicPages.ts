@@ -4,4 +4,6 @@ export default interface IPublicPages{
     icon?: string;
     image?: string;
     href: string;
+    category:"Global"|"Dev";
+    mine:boolean;
 }

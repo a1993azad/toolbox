@@ -1,7 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+body,html{
+  height:100vh;
+}
+.video-bg{
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 /* :root {
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 214, 219, 220;

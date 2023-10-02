@@ -1,12 +1,16 @@
 "use client";
-import IClientViewProps from "@models/IClientViewProps";
+import {IWeatherClientViewProps} from "@models/IWeather";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { Suspense, useDeferredValue } from "react";
 import { getCurrentLocation } from "utils/location";
+import WeatherResult from "./WeatherResult";
+import Loading from "@components/Loading";
 
-function ClientView(props: IClientViewProps) {
+function ClientView(props: IWeatherClientViewProps) {
+  
   const { error, currentWeather, query } = props;
+  const loaded=useDeferredValue(!!error || !!currentWeather)
   const { push } = useRouter();
   let weather;
   if (currentWeather?.weather) {
@@ -26,23 +30,11 @@ function ClientView(props: IClientViewProps) {
   React.useEffect(() => {
     initLocation();
   }, [initLocation]);
-  
-  return !!error ? (
-    <div className="bg-red-800 text-red-200 p-2 text-center">{error}</div>
-  ) : (
-    <div>
-      Current Weather: 
-      {currentWeather?.name} |
-      {weather?.description} |
-      {currentWeather?.main?.temp} &deg;C
-      <Image
-        width={90}
-        height={90}
-        src={`https://openweathermap.org/img/wn/${weather?.icon}@2x.png`}
-        alt={weather?.main || ""}
-      />
-    </div>
-  );
+ return <>
+ <Suspense fallback={<Loading/>}>
+  <WeatherResult loaded={loaded} weather={weather} currentWeather={currentWeather} error={error}/>
+ </Suspense>
+ </>
 }
 
 export default ClientView;

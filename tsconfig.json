@@ -23,6 +23,8 @@
       "@models/*": ["models/*"],
       "@components/*": ["components/*"],
       "@lib/*": ["lib/*"],
+      "@utils/*": ["utils/*"],
+      "@services/*": ["services/*"],
       "@data/*": ["data/*"]
     }
   },

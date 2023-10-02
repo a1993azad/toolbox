@@ -5,7 +5,7 @@ import { uniqueId } from "lodash-es";
 import { getPages } from "@lib/home";
 import IPublicPages from "@models/IPublicPages";
 
-export default function Home() {
+export default function Page() {
   const [publicPages, setPublicPages] = React.useState<IPublicPages[]>([]);
 
   const initPages = React.useCallback(() => {

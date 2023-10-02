@@ -1,7 +1,9 @@
-export interface ICoords {
-  latitude: string;
-  longitude: string;
-}
+type lat='latitude'|'lat'
+type long='longitude'|'lon'
+type LatRecord=Record<lat,string>;
+type LongRecord=Record<long,string>;
+
+export interface ICoords extends Partial<LatRecord> , Partial<LongRecord>{}
 export interface IWeather {
   id: number;
   main: string;
@@ -28,13 +30,16 @@ export interface ICurrentWeather {
   name: string;
   weather?: IWeather[];
   main?: IMain;
+  coord?: ICoords;
 }
 export interface IWeatherClientViewProps {
-  error?: string;
-  currentWeather?: ICurrentWeather;
+  error?: string | null;
+  currentWeather?: ICurrentWeather | null;
   query?: ICoords;
 }
 export interface IWeatherProps extends Pick<IWeatherClientViewProps,"currentWeather" | "error">{
   weather?:IWeather,
   loaded:boolean
 }
+
+export default interface IWeatherTitleProps extends Pick<IWeatherClientViewProps,"currentWeather" |"error">{}

@@ -1,10 +1,14 @@
+"use client";
+import GlassCard from "@components/GlassCard";
 import Loading from "@components/Loading";
+import WeatherTitle from "@components/WeatherTitle";
 import { IWeatherProps } from "@models/IWeather";
 import Image from "next/image";
 import React from "react";
 
 function WeatherResult(props: IWeatherProps) {
   const { error, weather, currentWeather, loaded } = props;
+
   if (!loaded) return <Loading />;
   return (
     <div className="hero min-h-screen">
@@ -25,36 +29,28 @@ function WeatherResult(props: IWeatherProps) {
         </video>
       )}
       <div className="hero-overlay bg-opacity-60"></div>
-      <div className="hero-content text-center text-neutral-content">
+      <div className="hero-content text-center text-neutral-content z-10 relative">
         <div className="max-w-md">
-          <div className="card w-96 glass">
-            <figure>
-              <Image
-                width={100}
-                height={100}
-                src={`https://openweathermap.org/img/wn/${weather?.icon}@2x.png`}
-                alt={weather?.main || ""}
-              />
-              <b className="text-lg text-white">{currentWeather?.main?.temp} &deg;C</b>
-            </figure>
-            <div className="card-body">
-              <div className="card-title">
-                {!!error ? (
-                  <div className="bg-red-800 text-red-200 p-2 text-center">
-                    {error}
-                  </div>
-                ) : (
-                  <h2 className="mb-5 text-5xl font-bold text-gray-600">
-                    {currentWeather?.name}
-                  </h2>
-                )}
-              </div>
-              <p className="text-amber-50 text-start">{weather?.description}</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Forecast</button>
-              </div>
-            </div>
-          </div>
+          <GlassCard
+            actions={<button className="btn btn-primary">Forecast</button>}
+            description={weather?.description}
+            image={
+              <>
+                <Image
+                  width={100}
+                  height={100}
+                  src={`https://openweathermap.org/img/wn/${weather?.icon}@2x.png`}
+                  alt={weather?.main || ""}
+                />
+                <b className="text-lg text-white">
+                  {currentWeather?.main?.temp} &deg;C
+                </b>
+              </>
+            }
+            title={
+              <WeatherTitle currentWeather={currentWeather} error={error} />
+            }
+          />
         </div>
       </div>
     </div>

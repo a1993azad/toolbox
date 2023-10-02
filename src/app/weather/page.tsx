@@ -1,30 +1,26 @@
 import { getCurrentWeatherInServerSide } from "@lib/weather";
 import React from "react";
-import ClientView from "./clientView";
+import ClientView from "./ClientView";
 
-async function Weather({
+async function Page({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-  let currentWeather;
-  let error;
-  try {
-    if (searchParams?.latitude && searchParams?.longitude) {
-      currentWeather = await getCurrentWeatherInServerSide(
-        parseFloat(searchParams?.latitude as string),
-        parseFloat(searchParams?.longitude as string)
-      );
+  let currentWeather = null;
+  let error = null;
 
-    }
-  } catch (err) {
-    console.error(err);
-    const { message } = err as Error;
-    if (message) {
-      error = message;
+  if (searchParams?.latitude && searchParams?.longitude) {
+    const res = await getCurrentWeatherInServerSide(
+      parseFloat(searchParams?.latitude as string),
+      parseFloat(searchParams?.longitude as string)
+    );
+    if (res?.error) {
+      ({ error } = res);
+    } else if (res) {
+      currentWeather = res;
     }
   }
-
   return (
     <ClientView
       error={error}
@@ -37,4 +33,4 @@ async function Weather({
   );
 }
 
-export default Weather;
+export default Page;

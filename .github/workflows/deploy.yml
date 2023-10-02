@@ -25,12 +25,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       - name: Build and Publish to Github Packages Registry
-        uses: elgohr/Publish-Docker-Github-Action@v5
+        uses: elgohr/Publish-Docker-Github-Action@master
         env:
           OPEN_WEATHER_API_KEY: ${{ secrets.APP_OPEN_WEATHER_API_KEY }}
         with:
-          name: a1993azad/toolbox
-          #registry: ghcr.io
+          name: a1993azad/toolbox/toolbox
+          registry: ghcr.io
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: Dockerfile

@@ -18,6 +18,7 @@ ENV OPEN_WEATHER_API_KEY=$OPEN_WEATHER_API_KEY
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/.env ./.env
 
 
 RUN NODE_ENV=production npm run build

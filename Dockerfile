@@ -18,9 +18,9 @@ ENV OPEN_WEATHER_API_KEY=$OPEN_WEATHER_API_KEY
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
-ARG NODE_ENV=production
-RUN echo ${NODE_ENV}
-RUN NODE_ENV=${NODE_ENV} npm run build
+
+
+RUN NODE_ENV=production npm run build
 
 # Production image, copy all the files and run next
 FROM node:18-alpine AS runner
@@ -36,8 +36,10 @@ COPY --from=builder /app/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=BUILD_IMAGE /app/package*.json ./
+COPY --from=BUILD_IMAGE /app/.next ./.next
+COPY --from=BUILD_IMAGE /app/public ./public
+COPY --from=BUILD_IMAGE /app/node_modules ./node_modules
 
 USER nextjs
 
@@ -48,4 +50,5 @@ EXPOSE 3000
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry.
 ENV NEXT_TELEMETRY_DISABLED 1
-CMD ["npm", "run", "start"]
+ENV NODE_ENV=production
+CMD ["npm", "start"]

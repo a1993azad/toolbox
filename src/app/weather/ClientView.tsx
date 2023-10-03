@@ -9,7 +9,10 @@ import Loading from "@components/Loading";
 
 function ClientView(props: IWeatherClientViewProps) {
   const { error, currentWeather, query } = props;
-  const loaded = useDeferredValue(!!error || !!currentWeather);
+  const [locationError, setLocationError] = React.useState<null | string>(null);
+  const loaded = useDeferredValue(
+    !!error || !!currentWeather || !!locationError
+  );
   const { push } = useRouter();
   let weather;
   if (currentWeather?.weather) {
@@ -17,13 +20,21 @@ function ClientView(props: IWeatherClientViewProps) {
   }
 
   const initLocation = React.useCallback(async () => {
-    if (query?.latitude && query?.longitude) {
-      return;
+    try {
+      if (query?.latitude && query?.longitude) {
+        return;
+      }
+      const {
+        coords: { latitude, longitude },
+      } = await getCurrentLocation();
+      push(`/weather?latitude=${latitude}&longitude=${longitude}`);
+    } catch (error) {
+      if (error) {
+        const { message } = error as Error;
+
+        setLocationError(message);
+      }
     }
-    const {
-      coords: { latitude, longitude },
-    } = await getCurrentLocation();
-    push(`/weather?latitude=${latitude}&longitude=${longitude}`);
   }, [query, push]);
 
   React.useEffect(() => {
@@ -36,7 +47,7 @@ function ClientView(props: IWeatherClientViewProps) {
           loaded={loaded}
           weather={weather}
           currentWeather={currentWeather}
-          error={error}
+          error={error || locationError}
         />
       </Suspense>
     </>

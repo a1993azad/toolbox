@@ -6,7 +6,7 @@ function WeatherTitle({ error, currentWeather }: IWeatherTitleProps) {
   return (
     <>
       {!!error ? (
-        <div className="bg-red-800 text-red-200 p-2 text-center">{error}</div>
+        <div className="text-red-400 p-2 text-center">{error}</div>
       ) : (
         <h2 className="mb-5 text-4xl font-bold text-gray-600 flex flex-row items-center truncate">
             <Icon icon="solar:map-point-wave-bold-duotone" className="me-2"/>

@@ -3,8 +3,6 @@ name: Build and Deploy
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the main branch
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
     inputs:
       logLevel:
@@ -32,7 +30,7 @@ jobs:
           name: a1993azad/toolbox/toolbox
           registry: ghcr.io
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.TOKEN }}
           dockerfile: Dockerfile
           buildargs: OPEN_WEATHER_API_KEY
           tags: latest
@@ -41,15 +39,15 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           GITHUB_USERNAME: ${{ secrets.USERNAME }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ secrets.TOKEN }}
         with:
           host: ${{ secrets.FTP_SERVER }}
           port: ${{ secrets.FTP_PORT }}
           username: ${{ secrets.FTP_USERNAME  }}
           password: ${{ secrets.FTP_PASSWORD }}
-          envs: GITHUB_USERNAME,GITHUB_TOKEN
+          envs: GITHUB_USERNAME,TOKEN
           script: |
-            docker login ghcr.io -u $GITHUB_USERNAME -p $GITHUB_TOKEN
+            docker login ghcr.io -u $GITHUB_USERNAME -p $TOKEN
             docker pull ghcr.io/a1993azad/toolbox/toolbox:latest
             docker stop containername
             docker system prune -f

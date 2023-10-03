@@ -1,15 +1,14 @@
 # Install dependencies only when needed
 FROM node:18-alpine AS deps
-FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk update && apk add --no-cache libc6-compat && apk add git
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --ignore-scripts=false
 
 
 # Rebuild the source code only when needed
-FROM base AS builder
+FROM node:18-alpine AS builder
 # add environment variables to client code
 ARG OPEN_WEATHER_API_KEY
 
@@ -24,7 +23,7 @@ RUN echo ${NODE_ENV}
 RUN NODE_ENV=${NODE_ENV} npm run build
 
 # Production image, copy all the files and run next
-FROM base AS runner
+FROM node:18-alpine AS runner
 WORKDIR /app
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001

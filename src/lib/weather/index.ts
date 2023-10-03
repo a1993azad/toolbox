@@ -17,8 +17,11 @@ async function getCurrentWeatherInServerSide(
     return currentWeather;
   } catch (error) {
     console.error(error);
-
-    return { error };
+    if(error){
+      const {message}=error as Error;
+      return { error:message };
+    }
+    return {error:'Error!'}
   }
 }
 export { getCurrentWeatherInServerSide };

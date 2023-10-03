@@ -8,6 +8,8 @@ import React from "react";
 
 function WeatherResult(props: IWeatherProps) {
   const { error, weather, currentWeather, loaded } = props;
+ 
+
 
   if (!loaded) return <Loading />;
   return (
@@ -32,9 +34,9 @@ function WeatherResult(props: IWeatherProps) {
       <div className="hero-content text-center text-neutral-content z-10 relative">
         <div className="max-w-md">
           <GlassCard
-            actions={<button className="btn btn-primary">Forecast</button>}
+            actions={!error && <button className="btn btn-primary">Forecast</button>}
             description={weather?.description}
-            image={
+            image={!!weather?.icon ?
               <>
                 <Image
                   width={100}
@@ -45,7 +47,7 @@ function WeatherResult(props: IWeatherProps) {
                 <b className="text-lg text-white">
                   {currentWeather?.main?.temp} &deg;C
                 </b>
-              </>
+              </>:null
             }
             title={
               <WeatherTitle currentWeather={currentWeather} error={error} />

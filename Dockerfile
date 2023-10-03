@@ -10,7 +10,7 @@ RUN npm ci --ignore-scripts=false
 # Rebuild the source code only when needed
 FROM node:18-alpine AS builder
 # add environment variables to client code
-ARG OPEN_WEATHER_API_KEY
+ARG OPEN_WEATHER_API_KEY=OPEN_WEATHER_API_KEY
 
 
 ENV OPEN_WEATHER_API_KEY=$OPEN_WEATHER_API_KEY

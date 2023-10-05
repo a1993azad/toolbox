@@ -20,9 +20,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: 'Create env file'
-        run: |
-          echo "OPEN_WEATHER_API_KEY=${{ secrets.APP_OPEN_WEATHER_API_KEY  }}" > .env
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       - name: Build and Publish to Github Packages Registry

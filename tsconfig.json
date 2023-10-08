@@ -25,6 +25,9 @@
       "@lib/*": ["lib/*"],
       "@utils/*": ["utils/*"],
       "@services/*": ["services/*"],
+      "@graphql/*": ["graphql/*"],
+      "@types/*": ["types/*"],
+      "@app/*": ["app/*"],
       "@data/*": ["data/*"]
     }
   },

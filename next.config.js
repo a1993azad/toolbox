@@ -1,10 +1,14 @@
 /** @type {import('next').NextConfig} */
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
+const withTwin = require('./withTwin.js')
+
 const nextConfig = {
-    reactStrictMode: true,
+  transpilePackages: ['react-daisyui'],
+  reactStrictMode: true,
   images: {
-    domains: ['openweathermap.org'],
-  },
-}
+    domains: ["openweathermap.org"],
+  }
+  
+};
 dotenv.config();
-module.exports = nextConfig
+module.exports = withTwin(nextConfig);

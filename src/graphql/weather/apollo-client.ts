@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache,HttpLink } from "@apollo/client"
 
 const link =new HttpLink({
-  uri: `http://localhost:3000/api/graphqlWeather`,
+  uri: `${process.env.SITE_URL}/api/graphqlWeather`,
 })
 const client = new ApolloClient({
   link,

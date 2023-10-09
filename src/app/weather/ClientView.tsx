@@ -6,6 +6,8 @@ import React, { Suspense, useDeferredValue } from "react";
 import { getCurrentLocation } from "@utils/location";
 import WeatherResult from "./WeatherResult";
 import Loading from "@components/Loading";
+import { ApolloProvider } from '@apollo/client'
+import client from "@graphql/weather/apollo-client"
 
 function ClientView(props: IWeatherClientViewProps) {
   const { error, currentWeather, query } = props;
@@ -41,7 +43,7 @@ function ClientView(props: IWeatherClientViewProps) {
     initLocation();
   }, [initLocation]);
   return (
-    <>
+    <> <ApolloProvider client={client}>
       <Suspense fallback={<Loading />}>
         <WeatherResult
           loaded={loaded}
@@ -50,6 +52,7 @@ function ClientView(props: IWeatherClientViewProps) {
           error={error || locationError}
         />
       </Suspense>
+      </ApolloProvider>
     </>
   );
 }

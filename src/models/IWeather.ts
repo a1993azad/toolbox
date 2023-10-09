@@ -1,7 +1,7 @@
 type lat='latitude'|'lat'
 type long='longitude'|'lon'
-type LatRecord=Record<lat,string>;
-type LongRecord=Record<long,string>;
+type LatRecord=Record<lat,string | number | null | undefined>;
+type LongRecord=Record<long,string | number | null | undefined>;
 
 export interface ICoords extends Partial<LatRecord> , Partial<LongRecord>{}
 export interface IWeather {

@@ -11,9 +11,11 @@ RUN npm ci --ignore-scripts=false
 FROM node:18-alpine AS builder
 # add environment variables to client code
 ARG OPEN_WEATHER_API_KEY=OPEN_WEATHER_API_KEY
+ARG SITE_URL=SITE_URL
 
 
 ENV OPEN_WEATHER_API_KEY=$OPEN_WEATHER_API_KEY
+ENV SITE_URL=$SITE_URL
 
 WORKDIR /app
 COPY . .

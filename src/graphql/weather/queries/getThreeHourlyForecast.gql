@@ -1,0 +1,58 @@
+query ($lat: String, $lon: String) {
+    getThreeHourlyForecast (
+        lat: $lat,
+        lon: $lon
+    ) {
+        __typename
+        cod
+        message
+        cnt
+        list { 
+            dt
+            main { 
+                temp
+                feels_like
+                pressure
+                humidity
+                temp_min
+                temp_max
+                sea_level
+                grnd_level
+                temp_kf
+            }
+            weather { 
+                id
+                main
+                description
+                icon
+            }
+            clouds { 
+                all
+            }
+            wind { 
+                speed
+                deg
+                gust
+            }
+            visibility
+            pop
+            sys { 
+                pod
+            }
+            dt_txt
+        }
+        city { 
+            id
+            name
+            coord { 
+                lon
+                lat
+            }
+            country
+            population
+            timezone
+            sunrise
+            sunset
+        }
+    }
+}

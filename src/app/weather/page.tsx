@@ -22,14 +22,15 @@ async function Page({
     }
   }
   return (
-    <ClientView
-      error={error}
-      currentWeather={currentWeather}
-      query={{
-        latitude: searchParams?.latitude as string,
-        longitude: searchParams?.longitude as string,
-      }}
-    />
+   
+      <ClientView
+        error={error}
+        currentWeather={currentWeather}
+        query={{
+          latitude: searchParams?.latitude as string,
+          longitude: searchParams?.longitude as string,
+        }}
+      />
   );
 }
 
